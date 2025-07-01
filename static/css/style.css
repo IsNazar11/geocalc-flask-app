@@ -1,0 +1,75 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
+    margin: 20px;
+}
+
+h1, h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+legend {
+    font-weight: bold;
+    color: #0056b3;
+    padding: 0 10px;
+    font-style: italic;
+}
+
+input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
+}
+
+/* Спеціальний стиль для полів азимута */
+input[name^="azimuth"] {
+    width: 80px;
+    display: inline-block;
+}
+
+/* ... (весь код до кнопки без змін) ... */
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Вказуємо тільки той стиль, що змінюється */
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Стиль для результату */
+.result {
+    background-color: #e9f7ef;
+    border-left: 5px solid #28a745;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+/* Зайва дужка в кінці була прибрана */
