@@ -1,9 +1,15 @@
+/* Глобальний стиль для правильного розрахунку розмірів */
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background-color: #f4f7f6;
     color: #333;
     line-height: 1.6;
-    margin: 20px;
+    margin: 0; /* Прибираємо відступи за замовчуванням */
+    padding: 15px; /* Додаємо внутрішні відступи */
 }
 
 h1, h2 {
@@ -34,42 +40,66 @@ legend {
 }
 
 input[type="number"] {
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: calc(100% - 20px);
+    /* Поля тепер займають 100% ширини батьківського елемента */
+    width: 100%;
     margin-bottom: 10px;
+    font-size: 16px; /* Збільшуємо шрифт для кращої читабельності */
 }
 
-/* Спеціальний стиль для полів азимута */
-input[name^="azimuth"] {
-    width: 80px;
-    display: inline-block;
+/* НОВИЙ СТИЛЬ ДЛЯ ГНУЧКИХ ПОЛІВ АЗИМУТА */
+.azimuth-inputs {
+    display: flex; /* Вмикаємо гнучку модель */
+    gap: 10px; /* Додаємо проміжок між полями */
 }
 
-/* ... (весь код до кнопки без змін) ... */
+.azimuth-inputs input {
+    /* Кожне поле буде займати рівну частину доступного простору */
+    flex: 1;
+    min-width: 60px; /* Мінімальна ширина, щоб поля не злипалися */
+}
+
 
 button {
     background-color: #007bff;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    /* Кнопка займає всю ширину для зручності на мобільних */
+    width: 100%; 
 }
 
-/* Вказуємо тільки той стиль, що змінюється */
 button:hover {
     background-color: #0056b3;
 }
 
-/* Стиль для результату */
 .result {
     background-color: #e9f7ef;
     border-left: 5px solid #28a745;
     padding: 15px;
     margin-top: 20px;
     border-radius: 5px;
+    /* Дозволяє переносити довгі слова/результати */
+    word-wrap: break-word;
 }
-/* Зайва дужка в кінці була прибрана */
+
+/* МЕДІА-ЗАПИТ: Правила всередині застосовуються тільки для екранів шириною 768px або менше */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        -webkit-text-size-adjust: 100%; /* Запобігає автозбільшенню шрифту на iOS */
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    form {
+        padding: 15px;
+    }
+}

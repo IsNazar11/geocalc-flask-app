@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Геодезичний Калькулятор</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -13,33 +14,32 @@
     <h2>Пряма геодезична задача (ПГЗ)</h2>
     <p>Визначення координат кінцевої точки за відомими координатами початкової точки, азимутом та відстанню.</p>
 
-    <form action="/direct" method="post">
-        <fieldset>
-            <legend>Початкові дані</legend>
-            <label>Координата X1 (метри):</label><br>
-            <input type="number" name="pgz_x1" step="any" required placeholder="5570428.12"><br><br>
+<form action="/direct" method="post">
+    <fieldset>
+        <legend>Початкові дані</legend>
+        <label>Координата X1 (метри):</label><br>
+        <input type="number" name="pgz_x1" step="any" required placeholder="5570428.12" value="{{ pgz_inputs.x1 if pgz_inputs }}"><br><br>
 
-            <label>Координата Y1 (метри):</label><br>
-            <input type="number" name="pgz_y1" step="any" required placeholder="6134102.56"><br><br>
+        <label>Координата Y1 (метри):</label><br>
+        <input type="number" name="pgz_y1" step="any" required placeholder="6134102.56" value="{{ pgz_inputs.y1 if pgz_inputs }}"><br><br>
 
-            <label>Азимут:</label><br>
-            <input type="number" name="azimuth_deg" min="0" max="359" required placeholder="°" style="width: 60px;">
-            <label>°</label>
-            <input type="number" name="azimuth_min" min="0" max="59" required placeholder="'" style="width: 60px;">
-            <label>'</label>
-            <input type="number" name="azimuth_sec" step="any" min="0" max="59" required placeholder='"' style="width: 60px;">
-            <label>"</label><br><br>
-
-            <label>Відстань (метри):</label><br>
-            <input type="number" name="distance" step="any" required placeholder="1250.75"><br><br>
-        </fieldset>
+        <label>Азимут:</label><br>
+        <div class="azimuth-inputs">
+            <input type="number" name="azimuth_deg" min="0" max="359" required placeholder="°" value="{{ pgz_inputs.azimuth_deg if pgz_inputs }}">
+            <input type="number" name="azimuth_min" min="0" max="59" required placeholder="'" value="{{ pgz_inputs.azimuth_min if pgz_inputs }}">
+            <input type="number" name="azimuth_sec" step="any" min="0" max="59" required placeholder='"' value="{{ pgz_inputs.azimuth_sec if pgz_inputs }}">
+        </div>
         <br>
-        <button type="submit">Розрахувати ПГЗ</button>
-    </form>
-    {% if pgz_result %}
-    <p class="result"><b>{{ pgz_result }}</b></p>
-    <h3>Результат розрахунку ПГЗ:</h3>
-    <p><b>{{ pgz_result }}</b></p>
+
+        <label>Відстань (метри):</label><br>
+        <input type="number" name="distance" step="any" required placeholder="1250.75" value="{{ pgz_inputs.distance if pgz_inputs }}"><br><br>
+    </fieldset>
+    <br>
+    <button type="submit">Розрахувати ПГЗ</button>
+</form>
+
+{% if pgz_result %}
+    <p class="result"><b>{{ pgz_result | safe }}</b></p>
 {% endif %}
 
     <hr>
@@ -47,29 +47,28 @@
     <h2>Обернена геодезична задача (ОГЗ)</h2>
     <p>Визначення довжини лінії та азимута за відомими координатами двох точок.</p>
 
-    <form action="/inverse" method="post">
-        <fieldset>
-            <legend>Початкова точка (P1)</legend>
-            <label>Координата X1 (метри):</label><br>
-            <input type="number" name="ogz_x1" step="any" required placeholder="5570428.12"><br><br>
-            <label>Координата Y1 (метри):</label><br>
-            <input type="number" name="ogz_y1" step="any" required placeholder="6134102.56"><br>
-        </fieldset>
-        <br>
-        <fieldset>
-            <legend>Кінцева точка (P2)</legend>
-            <label>Координата X2 (метри):</label><br>
-            <input type="number" name="ogz_x2" step="any" required placeholder="5571401.33"><br><br>
-            <label>Координата Y2 (метри):</label><br>
-            <input type="number" name="ogz_y2" step="any" required placeholder="6134954.81"><br>
-        </fieldset>
-        <br>
-        <button type="submit">Розрахувати ОГЗ</button>
-    </form>
+<form action="/inverse" method="post">
+    <fieldset>
+        <legend>Початкова точка (P1)</legend>
+        <label>Координата X1 (метри):</label><br>
+        <input type="number" name="ogz_x1" step="any" required placeholder="5570428.12" value="{{ ogz_inputs.x1 if ogz_inputs }}"><br><br>
+        <label>Координата Y1 (метри):</label><br>
+        <input type="number" name="ogz_y1" step="any" required placeholder="6134102.56" value="{{ ogz_inputs.y1 if ogz_inputs }}"><br>
+    </fieldset>
+    <br>
+    <fieldset>
+        <legend>Кінцева точка (P2)</legend>
+        <label>Координата X2 (метри):</label><br>
+        <input type="number" name="ogz_x2" step="any" required placeholder="5571401.33" value="{{ ogz_inputs.x2 if ogz_inputs }}"><br><br>
+        <label>Координата Y2 (метри):</label><br>
+        <input type="number" name="ogz_y2" step="any" required placeholder="6134954.81" value="{{ ogz_inputs.y2 if ogz_inputs }}"><br>
+    </fieldset>
+    <br>
+    <button type="submit">Розрахувати ОГЗ</button>
+</form>
+
 {% if ogz_result %}
     <p class="result"><b>{{ ogz_result | safe }}</b></p>
-    <h3>Результат розрахунку ОГЗ:</h3>
-    <p><b>{{ ogz_result | safe }}</b></p>
 {% endif %}
 
 </body>
